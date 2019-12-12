@@ -1,0 +1,32 @@
+
+html {
+	margin: 0px 0px;
+	padding: 0px 0px;
+}
+
+body {
+	display: grid;
+	grid-template-rows: 70px 400px 1fr;
+	margin: 0px;
+	padding: 0px 0px;	
+}
+
+h1 {
+	margin: auto;	
+}
+
+#container {
+	display: grid;
+	width: 400px;
+	height: 400px;	
+	margin: auto;	
+}
+
+#botBlock {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.cell {
+	border: 1px black solid;
+}
