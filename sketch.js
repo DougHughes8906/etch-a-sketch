@@ -35,25 +35,61 @@ function createGrid(sideLength) {
 		let newCell = document.createElement("DIV");
 		newCell.classList.add("cell");
 		gridNodes.push(newCell);
+		// note the initial darkness for each cell as 0 (white)
+		nodeDarkness.push(0);
+		// add the cell to the grid container			
 		container.appendChild(newCell);
 	}
 	
 	return 0; 	
 }
 
+// adds the darkening event listeners for every node in the 
+// grid
+function addListeners() {
+	for (let i = 0; i < gridNodes.length; i++)
+	{
+		gridNodes[i].addEventListener("mouseover", function() { darken(i); });
+	}
+}
 
+// darkens the specified node by 10%. The node is specified
+// by its index in the gridNodes array. If the node is already
+// 100% black, then nothing is done.
+function darken(index) {
+	if (nodeDarkness[index] < MAX_DARK)
+	{
+		nodeDarkness[index]++;	
+		let percent = (MAX_DARK - nodeDarkness[index]) * 10;
+		percent = percent.toString();
+		percent += "%";	
+		let attString = "background-color: rgb(" + percent + ", " + percent + ", "
+			+ percent + ");";
+		gridNodes[index].setAttribute("style", attString);	
+	}	
+}
 
 // the container that will hold the grid
 const container = document.querySelector("#container");
 
 // array that will hold each node of the grid
 let gridNodes = [];
+// array that holds a value from 0 to 10 representing the corresponding
+// "black" value of the same node index (in the gridNodes array)
+// ex. value of 10 represents 100% black and 4 represents 40% black
+let nodeDarkness = [];
 
 // length / width of grid by # of nodes (square grid)
-const SIDE_LEN = 30;
+const SIDE_LEN = 70;
 
 // set max / min side-lengths for the program
 const MIN_LEN = 1;
 const MAX_LEN = 400;
 
+// represent the minimum and maximum darkness values in the nodeDarkness array
+const MIN_DARK = 0;
+const MAX_DARK = 10;
+
 createGrid(SIDE_LEN);
+// add event listeners for each cell in the grid
+addListeners();

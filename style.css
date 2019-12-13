@@ -20,6 +20,7 @@ h1 {
 	width: 400px;
 	height: 400px;	
 	margin: auto;	
+	border: 1px solid black;
 }
 
 #botBlock {
@@ -28,5 +29,5 @@ h1 {
 }
 
 .cell {
-	border: 1px black solid;
+	background-color: rbg(100%, 100%, 100%);
 }
