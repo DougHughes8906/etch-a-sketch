@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Etch-A-Sketch</title>
+  <title>Etch A Sketch</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<h1>Etch-A-Sketch</h1>	
+	<h1>Etch A Sketch</h1>	
 	<div id="container"></div>
-	<div id ="botBlock"></div>
+	<div id="botBlock">
+		<div></div>
+		<div id="chooseColors">
+			<button type="button" id="BandW">
+				Black & White
+			</button>
+			<button type="button" id="Rainbow">
+				Rainbow
+			</button>	
+		</div>
+		<div id="chooseSides">
+			<span># of cells per side:</span>
+			<input type="text">
+			<button type="button" id="reset">
+				Reset
+			</button>	
+		</div>
+		<div></div>
+	</div>
   <script src="sketch.js"></script>
 </body>
 </html>

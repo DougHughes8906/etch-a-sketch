@@ -45,8 +45,8 @@ function createGrid(sideLength) {
 }
 
 // adds the darkening event listeners for every node in the 
-// grid
-function addListeners() {
+// grid (black and white color scheme)
+function addBWListeners() {
 	for (let i = 0; i < gridNodes.length; i++)
 	{
 		gridNodes[i].addEventListener("mouseover", function() { darken(i); });
@@ -66,6 +66,67 @@ function darken(index) {
 		let attString = "background-color: rgb(" + percent + ", " + percent + ", "
 			+ percent + ");";
 		gridNodes[index].setAttribute("style", attString);	
+	}	
+}
+
+// adds the random color event listeners for every node in the grid
+// (the rainbow color scheme)
+function addRBListeners() {
+	for (let i = 0; i < gridNodes.length; i++)
+	{
+		gridNodes[i].addEventListener("mouseover", function() { randColor(i); });
+	}
+}
+
+// Generates a random background color for the specified node. The node
+// is specified by its index in the gridNodes array.
+function randColor(index) {
+	// build up the string that will be used to update the node's 
+	// background-color attribute
+	let attString = "background-color: rgb(";
+	let percent = Math.floor(Math.random() * 101);
+	percent = percent.toString() + "%";
+	attString += percent + ", ";
+	
+	percent = Math.floor(Math.random() * 101);
+	percent = percent.toString() + "%";
+	attString += percent + ", ";
+
+	percent = Math.floor(Math.random() * 101);
+	percent = percent.toString() + "%";
+	attString += percent + ");";
+
+	gridNodes[index].setAttribute("style", attString);
+}
+
+// clears all event listeners for the nodes in the gridNodes
+// array
+function clearListeners() {
+	if (isBandW)
+	{
+		for (let i = 0; i < gridNodes.length; i++)
+		{
+			gridNodes[i].removeEventListener("mouseover", function() { darken(i); });
+		}
+	}
+	else
+	{
+		for (let i = 0; i < gridNodes.length; i++)
+		{
+			gridNodes[i].removeEventListener("mouseover", 
+				function() { randColor(i); });
+		}
+	}
+} 
+
+// resets the background-color of every node in the gridNodes array
+// to white
+function resetWhite() {
+	const whiteAtt = "background-color: rgb(100%, 100%, 100%);";
+	for (let i = 0; i < gridNodes.length; i++)
+	{
+		gridNodes[i].setAttribute("style", whiteAtt);
+		nodeDarkness[i] = 0;
 	}	
 }
 
@@ -91,5 +152,35 @@ const MIN_DARK = 0;
 const MAX_DARK = 10;
 
 createGrid(SIDE_LEN);
-// add event listeners for each cell in the grid
-addListeners();
+// add event listeners for each cell in the grid (black and white)
+addBWListeners();
+
+// holds true if the current color scheme is black and white and false
+// otherwise
+let isBandW = true;
+
+// add event listeners for each of the color scheme buttons
+const bAndWBtn = document.querySelector("#BandW");
+const rainbowBtn = document.querySelector("#Rainbow");
+
+bAndWBtn.addEventListener("click", function() { 
+	if (!isBandW)
+	{	
+		clearListeners();
+		resetWhite();
+		addBWListeners();
+		isBandW = true;
+	}
+});
+
+rainbowBtn.addEventListener("click", function() {
+	if (isBandW)
+	{
+		clearListeners();
+		resetWhite();
+		addRBListeners();
+		isBandW = false;
+	}
+});
+
+
