@@ -44,12 +44,15 @@ function createGrid(sideLength) {
 	return 0; 	
 }
 
+
+
 // adds the darkening event listeners for every node in the 
 // grid (black and white color scheme)
 function addBWListeners() {
 	for (let i = 0; i < gridNodes.length; i++)
 	{
-		gridNodes[i].addEventListener("mouseover", function() { darken(i); });
+		handlers.push(function() { darken(i); });
+		gridNodes[i].addEventListener("mouseover", handlers[i]);
 	}
 }
 
@@ -74,7 +77,8 @@ function darken(index) {
 function addRBListeners() {
 	for (let i = 0; i < gridNodes.length; i++)
 	{
-		gridNodes[i].addEventListener("mouseover", function() { randColor(i); });
+		handlers.push(function() { randColor(i); });
+		gridNodes[i].addEventListener("mouseover", handlers[i]);
 	}
 }
 
@@ -104,17 +108,18 @@ function randColor(index) {
 function clearListeners() {
 	if (isBandW)
 	{
-		for (let i = 0; i < gridNodes.length; i++)
+		for (let i = gridNodes.length - 1; i >=  0; i--)
 		{
-			gridNodes[i].removeEventListener("mouseover", function() { darken(i); });
+			gridNodes[i].removeEventListener("mouseover", handlers[i]);
+			handlers.pop();
 		}
 	}
 	else
-	{
-		for (let i = 0; i < gridNodes.length; i++)
+	{	
+		for (let i = gridNodes.length - 1; i >= 0; i--)
 		{
-			gridNodes[i].removeEventListener("mouseover", 
-				function() { randColor(i); });
+			gridNodes[i].removeEventListener("mouseover", handlers[i]);
+			handlers.pop();	
 		}
 	}
 } 
@@ -130,6 +135,29 @@ function resetWhite() {
 	}	
 }
 
+// outputs an error message indicating the # of cells entered (for the
+// # of cells per side) is not valid
+function outputError() {
+	const errorMsg = `Error: must enter an integer value between ${MIN_LEN}` +
+		` and ${MAX_LEN}.`;
+	errorBar.textContent = errorMsg;
+}
+
+// clears the current error message (if any)
+function clearError() {
+	errorBar.textContent = "";
+}
+
+// deletes all of the current nodes in the grid (i.e. nodes within 
+// the gridNodes array)
+function deleteNodes() {
+	for (let i = gridNodes.length - 1; i >= 0; i--)
+	{
+		gridNodes[i].parentNode.removeChild(gridNodes[i]);
+		gridNodes.pop();
+	}
+}
+
 // the container that will hold the grid
 const container = document.querySelector("#container");
 
@@ -139,13 +167,16 @@ let gridNodes = [];
 // "black" value of the same node index (in the gridNodes array)
 // ex. value of 10 represents 100% black and 4 represents 40% black
 let nodeDarkness = [];
+// an array that holds the event handler function objects for each
+// of the nodes
+let handlers = [];
 
 // length / width of grid by # of nodes (square grid)
 const SIDE_LEN = 70;
 
 // set max / min side-lengths for the program
 const MIN_LEN = 1;
-const MAX_LEN = 400;
+const MAX_LEN = 100;
 
 // represent the minimum and maximum darkness values in the nodeDarkness array
 const MIN_DARK = 0;
@@ -183,4 +214,52 @@ rainbowBtn.addEventListener("click", function() {
 	}
 });
 
+// text bar that is used to enter in a # of nodes for each side
+// of the grid
+const inputBar = document.querySelector("input");
 
+// paragraph element that is used to display error messages
+const errorBar = document.querySelector("#errorMsg");
+
+// add event listener for the reset button. This button is supposed
+// to reset the side length (i.e. # of nodes per side) of the grid
+// based on the value in the text box
+const resetBtn = document.querySelector("#reset");
+resetBtn.addEventListener("click", function() {
+	// get the value in the text bar
+	let newSideLen = inputBar.value;
+	// make sure value entered is a number
+	if (isNaN(newSideLen))
+	{
+		outputError();
+	}
+	else
+	{
+		// make sure the number entered is an integer and within the
+		// valid range
+		newSideLen = +newSideLen;
+		if (!(Number.isInteger(newSideLen)) || newSideLen < MIN_LEN ||
+			newSideLen > MAX_LEN)
+		{
+			outputError();
+		}
+		
+		// integer has been entered within the valid range	
+		else
+		{
+			// clear out previous error (if there was one)
+			clearError();
+			clearListeners();
+			deleteNodes();
+			createGrid(newSideLen);
+			if (isBandW)
+			{
+				addBWListeners();
+			}
+			else
+			{
+				addRBListeners();
+			}
+		}
+	}
+});

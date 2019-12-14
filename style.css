@@ -27,7 +27,7 @@ h1 {
 
 #botBlock {
 	display:grid;
-	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 3fr;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -35,6 +35,11 @@ h1 {
 #chooseColors, #chooseSides {
 	margin-left: auto;
 	margin-right: auto;
+	align-self: end;	
+}
+
+#errorDiv {
+	align-self: start;
 }
 
 .cell {
