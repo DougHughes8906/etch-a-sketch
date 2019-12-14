@@ -172,7 +172,7 @@ let nodeDarkness = [];
 let handlers = [];
 
 // length / width of grid by # of nodes (square grid)
-const SIDE_LEN = 70;
+const START_LEN = 40;
 
 // set max / min side-lengths for the program
 const MIN_LEN = 1;
@@ -182,7 +182,7 @@ const MAX_LEN = 100;
 const MIN_DARK = 0;
 const MAX_DARK = 10;
 
-createGrid(SIDE_LEN);
+createGrid(START_LEN);
 // add event listeners for each cell in the grid (black and white)
 addBWListeners();
 
@@ -217,13 +217,15 @@ rainbowBtn.addEventListener("click", function() {
 // text bar that is used to enter in a # of nodes for each side
 // of the grid
 const inputBar = document.querySelector("input");
+// set the initial value in the text bar
+inputBar.value = START_LEN; 
 
 // paragraph element that is used to display error messages
 const errorBar = document.querySelector("#errorMsg");
 
 // add event listener for the reset button. This button is supposed
 // to reset the side length (i.e. # of nodes per side) of the grid
-// based on the value in the text box
+// based on the value in the text box. 
 const resetBtn = document.querySelector("#reset");
 resetBtn.addEventListener("click", function() {
 	// get the value in the text bar

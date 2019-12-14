@@ -3,6 +3,7 @@ html {
 	margin: 0px 0px;
 	padding: 0px 0px;
 	height: 100%;
+	font-family: Monaco;
 }
 
 body {
@@ -15,6 +16,25 @@ body {
 
 h1 {
 	margin: auto;	
+	color: #e8d671;
+	text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+button {
+	font-family: Monaco;
+	border-radius: 5px;
+}
+
+button:focus {
+	outline: 0;
+}
+
+button:hover {
+	box-shadow: 0 0 8px #cc2525;
+}
+
+input {
+	font-family: Monaco;
 }
 
 #container {
@@ -22,7 +42,8 @@ h1 {
 	width: 400px;
 	height: 400px;	
 	margin: auto;	
-	border: 1px solid black;
+	border: 10px solid #cc2525;
+	border-radius: 7px;
 }
 
 #botBlock {
@@ -35,13 +56,21 @@ h1 {
 #chooseColors, #chooseSides {
 	margin-left: auto;
 	margin-right: auto;
-	align-self: end;	
+	align-self: end;
+	font-size: 12px;	
 }
 
 #errorDiv {
 	align-self: start;
+	font-size: 14px;
+	color: #ea0631;
 }
 
 .cell {
 	background-color: rbg(100%, 100%, 100%);
+}
+
+.chosen {
+	background-color: #d80404;
+	color: white;
 }
