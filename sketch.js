@@ -193,6 +193,8 @@ let isBandW = true;
 // add event listeners for each of the color scheme buttons
 const bAndWBtn = document.querySelector("#BandW");
 const rainbowBtn = document.querySelector("#Rainbow");
+// initially set the BandW button to the chosen styling
+bAndWBtn.classList.add("chosen");
 
 bAndWBtn.addEventListener("click", function() { 
 	if (!isBandW)
@@ -200,6 +202,8 @@ bAndWBtn.addEventListener("click", function() {
 		clearListeners();
 		resetWhite();
 		addBWListeners();
+		bAndWBtn.classList.add("chosen");
+		rainbowBtn.classList.remove("chosen");
 		isBandW = true;
 	}
 });
@@ -210,6 +214,8 @@ rainbowBtn.addEventListener("click", function() {
 		clearListeners();
 		resetWhite();
 		addRBListeners();
+		rainbowBtn.classList.add("chosen");
+		bAndWBtn.classList.remove("chosen");
 		isBandW = false;
 	}
 });
